@@ -4,11 +4,11 @@ Created on Sat Apr 14 17:58:53 2018
 
 @author: Dan
 """
-folder='C:/Users/Dan/Documents/GitHub/PythonClass'
+#folder='C:/Users/Dan/Documents/GitHub/PythonClass'
 
 import os
-os.chdir(folder)
-os.getcwd()
+#os.chdir(folder)
+#os.getcwd()
 
 import numpy as np
 import matplotlib.pyplot as plt
