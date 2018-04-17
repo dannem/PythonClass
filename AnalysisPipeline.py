@@ -15,7 +15,7 @@ import auxfuns as af
 import timeit
 
 # loading data
-data=af.loadDataDN('S17_output.mat')
+data=af.loadDataDN('S09_fft.mat')
 # turning into 2D matrix
 els=np.array([24,23,22,25,26,27,59,60,61,62,63,64])-1
 domain=np.array(np.arange(75,375))
@@ -26,9 +26,9 @@ from sklearn.preprocessing import StandardScaler, scale, maxabs_scale, minmax_sc
 #scl = MaxAbsScaler() #Scale each feature by its maximum absolute value
 #scl = Normalizer() #Scale input vectors individually to unit norm
 #scl = StandardScaler() #Center to the mean and component wise scale to unit variance.
-#data = maxabs_scale(dataIn) #Scale each feature to the [-1, 1] range
+data = maxabs_scale(dataIn) #Scale each feature to the [-1, 1] range
 #data = scale(dataIn) #Center to the mean and component wise scale to unit variance.
-data=minmax_scale(dataIn,feature_range=(0, 1), axis=0)# scaling between 0 and 1
+#data=minmax_scale(dataIn,feature_range=(0, 1), axis=0)# scaling between 0 and 1
 
 
 #%% pca
@@ -79,7 +79,7 @@ for i in itertools.combinations(np.arange(1,81), 2):
      
 #      Create train and test sets
 
-     cv_scores = cross_val_score(pipeline, X, y, cv=16, scoring='accuracy',n_jobs=6)
+     cv_scores = cross_val_score(pipeline, X, y, cv=16, scoring='accuracy')
      scores_all.update({i:np.mean(cv_scores)})
      scores.append(np.mean(cv_scores))
      # Fit the pipeline to the training set: knn_scaled

@@ -20,7 +20,7 @@ def foldMatDN(data,els='all',stim='all',domain='all',blocks='all',ilust=False):
         blocks=np.arange(0,data.shape[3])
     data=data[np.ix_(els,domain,stim,blocks)]
     labels=np.tile(np.arange(1,data.shape[2]+1),data.shape[3])
-    data=data.reshape((data.shape[0]*data.shape[1],data.shape[2]*data.shape[3]))
+    data=data.reshape((data.shape[0]*data.shape[1],data.shape[2]*data.shape[3]),order='F')
     data=data.transpose()
     if ilust==True:
         fig = plt.gcf()
@@ -50,6 +50,9 @@ def loadDataDN(fileName, folder='default',printSize=True):
          print(type(mat))
          print(mat.keys())
          print(np.shape(mat[fileName]))
-    data = mat[fileName]
+    try:
+         data = mat[fileName]
+    except:
+         data=mat
     del mat
     return data
