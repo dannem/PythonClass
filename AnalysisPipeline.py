@@ -26,7 +26,7 @@ from sklearn.preprocessing import StandardScaler, scale, maxabs_scale, minmax_sc
 #scl = MaxAbsScaler() #Scale each feature by its maximum absolute value
 #scl = Normalizer() #Scale input vectors individually to unit norm
 #scl = StandardScaler() #Center to the mean and component wise scale to unit variance.
-data = maxabs_scale(dataIn) #Scale each feature to the [-1, 1] range
+#data = maxabs_scale(dataIn) #Scale each feature to the [-1, 1] range
 #data = scale(dataIn) #Center to the mean and component wise scale to unit variance.
 #data=minmax_scale(dataIn,feature_range=(0, 1), axis=0)# scaling between 0 and 1
 
