@@ -60,12 +60,30 @@ els=np.arange(0,64)
 data2D,labels=af.foldMatDN(data4D,els=els,domain=domain)
 #%% Preparing for classification
 from sklearn.preprocessing import StandardScaler, scale, maxabs_scale, minmax_scale,Normalizer, MaxAbsScaler
-scl = MaxAbsScaler() #Scale each feature by its maximum absolute value
+#scl = MaxAbsScaler() #Scale each feature by its maximum absolute value
 #scl = Normalizer() #Scale input vectors individually to unit norm
 #scl = StandardScaler() #Center to the mean and component wise scale to unit variance.
 #data = maxabs_scale(dataIn) #Scale each feature to the [-1, 1] range
 #data = scale(data2D) #Center to the mean and component wise scale to unit variance.
 data=minmax_scale(data2D,feature_range=(0, 1), axis=0)# scaling between 0 and 1
+
+#%% RFE
+from sklearn.svm import SVR
+from sklearn.feature_selection import RFE
+
+
+# Create the RFE object and rank each pixel
+estimator = SVR(kernel="linear")
+selector = RFE(estimator, 2000, step=0.01)
+selector = selector.fit(data, labels)
+selector.support_ 
+#selector.ranking_
+data=data[:,selector.support_]
+
+#svc = SVC(kernel="linear", C=1)
+#rfe = RFE(estimator=svc, n_features_to_select=1, step=1)
+#rfe.fit(data, labels)
+
 
 #%% Preprocessing
 #from sklearn.pipeline import make_pipeline
@@ -88,9 +106,9 @@ for i in itertools.combinations(np.arange(1,81), 2):
      X=data[np.logical_or(labels==i[0],labels==i[1]),:]
      y=labels[np.logical_or(labels==i[0],labels==i[1])]
      # Setup the pipeline steps: steps
-#     steps = [('clf', SVC(kernel='linear'))]
-     steps = [('dim_red', SelectKBest(chi2, chi_k)),
-               ('clf', SVC(C=1))]        
+     steps = [('clf', SVC(kernel='linear'))]
+#     steps = [('dim_red', SelectKBest(chi2, chi_k)),
+#               ('clf', SVC(C=1))]        
      # Create the pipeline: pipeline
      pipeline = Pipeline(steps)
      
